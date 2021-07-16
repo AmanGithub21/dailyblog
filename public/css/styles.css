@@ -1,0 +1,75 @@
+body {
+  padding: 0;
+}
+
+.btn {
+  border-color: #ddd;
+}
+
+.content-main {
+  margin: 40px 60px 40px 60px;
+}
+
+.fav-icon {
+  margin-left: 10px;
+  display: inline-block;
+  float: right;
+}
+
+.fav-icon-color {
+  color: red;
+}
+
+/* home */
+
+.buttons-div {
+  margin-top: 100px;
+}
+
+.home-button {
+  padding: 4px;
+}
+
+.home-input {
+  width: 300px;
+}
+
+/* dashboard */
+
+.custom-card {
+  margin-bottom: 20px;
+}
+
+.display-inlineblock {
+  display: inline-block;
+  padding-left: 0;
+}
+
+.read-btn {
+  display: inline-block;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.text-truncate {
+  /* background-color:yellow;
+  font-size:1.5rem; */
+  width: 70%;
+
+  /**Major Properties**/
+  text-overflow:ellipsis;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+/* Page */
+
+.page-button {
+  float: right;
+}
+
+.page-dashboard-button {
+  display: inline-block;
+  margin:30px 0 10px 60px;
+
+}

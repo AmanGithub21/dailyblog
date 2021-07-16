@@ -1,0 +1,21 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<h1>Global Posts</h1>
+
+<div>
+    <a type="buttons" href="/global/new">Compose</a>
+</div>
+
+<div class="row">
+    <% blogs.forEach(function(blog) { %>
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <!-- <div class="card-body"> -->
+                    <h5 class="card-title"><%= blog.title %></h5>
+                    <p class="card-text text-truncate d-inline"><%=blog.content %></p>
+                <!-- </div> -->
+                <a href="/global/<%=blog.title%>">Read More</a>
+            </div>
+        </div>
+    <% }) %>
+</div>
