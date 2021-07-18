@@ -1,0 +1,29 @@
+<% layout('./layouts/boilerplate.ejs') %>
+<section class="content-main">
+    <div class="dashboard-nav">
+        <% console.log(bloger) %>
+      <h1 class="d-inline-block col-md-7">Welcome <%= bloger.fname %></h1>
+      <a type="button" class="btn btn-light" href="/bloger/<%=bloger.blogername%>/compose">Compose</a>
+    </div>
+    <br>
+    
+    <div class="row">
+      <!-- For the display of title and hint of blog -->
+      <% bloger.blogs.forEach(function(blog){ %>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card custom-card">
+            <div class="card-body">
+              <h5 class="card-title display-inlineblock"><%=blog.title%> </h5>
+              <sup><i class="far fa-star fa-1x fav-icon"></i></sup>
+              <br>
+              <p class="card-text text-truncate">
+                <%=blog.content%>
+              </p>
+              <a href="/bloger/<%=bloger.blogername%>/<%=blog.title%>" type="button" class="read-btn btn btn-light btn-sm">Read further</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  
+  </section>

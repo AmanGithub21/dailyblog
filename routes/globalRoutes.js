@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Globalblog = require('../models/globalBlog');
 
+// Here I can add that feature If you want to post with your penName included or anonomesly. Ignore spellings.
+
+
 router.get('/', async function(req, res) {
     const blogs = await Globalblog.find({});
     res.render('global/home', { blogs });

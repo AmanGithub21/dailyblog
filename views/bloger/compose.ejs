@@ -1,0 +1,18 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<section class="container-fluid content-main">
+
+    <h1>Compose</h1><br>
+  
+    <form class="" action="/bloger/<%=bloger.blogername%>/compose"  method="post">
+      <div class="form-group">
+        <label><h4>Title</h4></label><br>
+        <input class="form-control" type="text" placeholder="Enter Title" autofocus maxlength="108" style="width: 45%" name="blog[title]">
+      </div>
+      <div class="form-group">
+        <label><h4>Content</h4></label><br>
+        <textarea class="blog-input form-control" name="blog[content]" rows="6" style="width: 45%" ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</section>

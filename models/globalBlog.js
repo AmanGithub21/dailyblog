@@ -7,7 +7,7 @@ mongoose.connect("mongodb://localhost:27017/blogerDB", {
     useFindAndModify: false
 });
 
-const blogSchema = Schema({
+const globalblogSchema = Schema({
     title: {
         type: String,
         required: true
@@ -15,4 +15,4 @@ const blogSchema = Schema({
     content: String,
 });
 
-module.exports = mongoose.model('Globalblog', blogSchema);
+module.exports = mongoose.model('Globalblog', globalblogSchema);

@@ -1,0 +1,20 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<a class="page-dashboard-button" href="/bloger/<%= blog.bloger.blogername %>"><i style="color:black;" class="fas fa-long-arrow-alt-left fa-3x"></i></a>
+
+
+<section class="content-main">
+
+  <h1 class="display-inlineblock col-md-8"><%=blog.title%></h1>
+  <br>
+  <p><%=blog.content%></p>
+  
+  <br><br>
+
+  <a href="/bloger/<%=blog.bloger.blogername%>/<%=blog.title%>/edit" class="btn btn-success">Edit</a>
+  <form class="d-inline-block" action="/bloger/<%= blog.bloger.blogername %>/<%=blog.title%>?_method=DELETE" method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+
+
+</section>
