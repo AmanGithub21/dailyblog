@@ -2,14 +2,16 @@
 
 <h1>Edit</h1>
 
-<form action="/global/<%=blog.title%>?_method=PUT" method="POST" class="form-group">
+<form action="/global/<%=blog.title%>?_method=PUT" method="POST" class="form-group needs-validation" novalidate>
     <div class="mb-3">
         <label class="form-label" for="title">Title</label>
-        <input type="text" name="title" value="<%=blog.title%>" class="form-control" id="title" >
+        <input type="text" name="title" value="<%=blog.title%>" class="form-control" id="title" required>
+        <div class="invalid-feedback">Please enter a title.</div>
     </div>
     <div class="mb-3">
         <label class="form-label" for="content">Content</label>
-        <textarea type="text" name="content" class="form-control" id="content" rows="5"><%=blog.content%></textarea>
+        <textarea type="text" name="content" class="form-control" id="content" rows="5" required><%=blog.content%></textarea>
+        <div class="invalid-feedback">Please enter a content.</div>
     </div>
     <button class="btn btn-success" type="submit">Edit</button>
 </form>

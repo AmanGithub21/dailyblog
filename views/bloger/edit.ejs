@@ -4,15 +4,17 @@
 
     <h1>Edit</h1><br>
   
-    <form class="" action="/bloger/<%=blog.bloger.blogername%>/<%=blog.title%>?_method=PUT"  method="post">
+    <form  class="needs-validation" novalidate action="/bloger/<%=blog.bloger.blogername%>/<%=blog.title%>?_method=PUT"  method="post">
       <div class="form-group">
         <label><h4>Title</h4></label><br>
-        <input class="form-control" type="text" autofocus maxlength="108" style="width: 45%" name="blog[title]" value="<%= blog.title %>">
+        <input class="form-control" type="text" autofocus maxlength="108" style="width: 45%" name="blog[title]" value="<%= blog.title %>" required>
+        <div class="invalid-feedback">Please enter a Title.</div>
       </div>
       <div class="form-group">
         <label><h4>Content</h4></label><br>
-        <textarea class="blog-input form-control" name="blog[content]" rows="6" style="width: 45%" ><%= blog.content %></textarea>
+        <textarea class="blog-input form-control" name="blog[content]" rows="6" style="width: 45%"  required><%= blog.content %></textarea>
+        <div class="invalid-feedback">Please write something.</div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 </section>
