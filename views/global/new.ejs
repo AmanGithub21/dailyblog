@@ -5,13 +5,15 @@
 <form action="/global" method="POST" class="needs-validation" novalidate>
     <div class="form-group mb-3">
         <label class="form-label" for="title">Title</label>
-        <input type="text" name="title" class="form-control" id="title" required>
+        <input type="text" name="blog[title]" class="form-control" id="title" autofocus required>
         <div class="invalid-feedback">Please enter a title.</div>
     </div>
     <div class="form-group mb-3">
         <label class="form-label" for="content">Content</label>
-        <textarea type="text" name="content" class="form-control" id="content" rows="4" required></textarea>
+        <textarea type="text" name="blog[content]" class="form-control" id="content" rows="4" required></textarea>
         <div class="invalid-feedback">Please enter a content.</div>
-    </div>
+    </div><br>
+    <%# if loged in then checked otherwise not %>
+    <input type="checkbox" id="name" value="Writer's Name"><label for="name">Include my Pen name in global post (router not done though)</label><br>
     <button class="btn btn-success" type="submit">Create</button>
 </form>

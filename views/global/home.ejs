@@ -7,15 +7,18 @@
 </div>
 
 <div class="row">
+    <!-- For the display of title and hint of blog -->
     <% blogs.forEach(function(blog) { %>
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <!-- <div class="card-body"> -->
-                    <h5 class="card-title"><%= blog.title %></h5>
-                    <p class="card-text text-truncate d-inline"><%=blog.content %></p>
-                <!-- </div> -->
-                <a href="/global/<%=blog.title%>">Read More</a>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card custom-card">
+            <div class="card-body">
+            <h5 class="card-title display-inlineblock"><%=blog.title%> </h5>
+            <sup><i class="far fa-star fa-1x fav-icon"></i></sup>
+            <br>
+            <p class="card-text text-truncate"><%=blog.content%></p>
+            <a href="/global/<%=blog.title%>" type="button" class="read-btn btn btn-light btn-sm">Read further</a>
             </div>
         </div>
-    <% }) %>
+        </div>
+    <% }); %>
 </div>

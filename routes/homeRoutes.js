@@ -1,13 +1,13 @@
 /*
 login
 signup
-contact
 about
 /home
 
 */
 const express = require('express');
 const router = express.Router();
+const catchAsync = require('../utility/catchAsync');
 
 const Bloger = require('../models/bloger');
 
@@ -41,20 +41,15 @@ router.get("/signup",async function(req, res){
     res.render('basic/signup');
 });
 
-router.post("/signup",async function(req, res) {
+router.post("/signup",catchAsync(async function(req, res) {
     const bloger = new Bloger(req.body);
     await bloger.save();
     console.log(bloger);
     res.redirect(`/bloger/${req.body.blogername}`);
-})
+}));
 
 router.get("/about",async function(req, res){
     res.render('basic/about');
 });
-
-
-
-
-
 
 module.exports = router;
