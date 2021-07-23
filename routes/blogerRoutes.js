@@ -1,61 +1,49 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true});
 const catchAsync = require('../utility/catchAsync');
-const {validateBlog} = require('../middleware');
+const {validateBlog, isLoggedIn, isCurrentUser} = require('../middleware');
 const ExpressError = require('../utility/ExpressError');
 
 const Bloger = require('../models/bloger');
 const Blog = require('../models/blog');
 
-router.get('/', catchAsync( async function(req, res) {
+router.get('/', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
     const bloger = await Bloger.findOne({blogername: req.params.blogername}).populate('blogs', 'title content');
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
-    res.render('bloger/dashboard', { bloger });
+    // console.log('askdfj', req.session.noBlog);
+    const ealert = req.session.noBlog;
+    delete req.session.noBlog;
+    return res.render('bloger/dashboard', { bloger, ealert });
 }));
 
-router.get('/compose', catchAsync( async function(req, res) {
-    const bloger = await Bloger.findOne({blogername:req.params.blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
+router.get('/compose', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
+    const bloger = req.user;
     res.render('bloger/compose', { bloger });
 }));
 
-router.post('/compose', validateBlog, catchAsync( async function(req, res) {
-    const bloger = await Bloger.findOne({blogername:req.params.blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
+router.post('/compose', isLoggedIn, isCurrentUser, validateBlog, catchAsync( async function(req, res) {
+    const bloger = req.user;
     const blog = new Blog(req.body.blog);
     blog.bloger = bloger;
     bloger.blogs.push(blog);
     await blog.save();
     await bloger.save();
+    req.flash('success', 'Successfully posted the blog.');
     res.redirect(`/bloger/${bloger.blogername}`);
 }));
 
-router.get('/:title', catchAsync( async function(req, res) {
-    const { blogername, title } = req.params;
-    // Got to find a better logic to do next two step in one line. I know it can be done but don't know how.
-    const bloger = await Bloger.findOne({blogername: blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
-    const blog = await Blog.findOne({title: title, bloger: bloger._id}).populate('bloger','blogername');
+router.get('/:title', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
+    const { title } = req.params;
+    // though i can also find in req.user and populate. May be I will do it later.
+    const blog = await Blog.findOne({title: title, bloger: req.user._id}).populate('bloger','blogername');
     if(!blog) {
         throw new ExpressError(400, 'Blog not found.');
     }
     res.render('bloger/blog', { blog });
 }));
 
-router.delete('/:title', catchAsync( async function(req, res) {
-    const { blogername, title } = req.params;
-    const bloger = await Bloger.findOne({blogername: blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
+router.delete('/:title', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
+    const { title } = req.params;
+    const bloger = req.user;
     const blog = await Blog.findOne({ title: title, bloger: bloger._id } ).populate('bloger', 'blogername');
     if(!blog) {
         throw new ExpressError(400, 'Blog not found.');
@@ -65,26 +53,18 @@ router.delete('/:title', catchAsync( async function(req, res) {
     res.redirect(`/bloger/${bloger.blogername}`);
 }));
 
-router.get('/:title/edit', catchAsync( async function(req, res) {
-    const { blogername, title } = req.params;
-    const bloger = await Bloger.findOne({blogername: blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
-    const blog = await Blog.findOne({title: title, bloger: bloger._id}).populate('bloger', 'blogername');
+router.get('/:title/edit', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
+    const { title } = req.params;
+    const blog = await Blog.findOne({title: title, bloger: req.user._id}).populate('bloger', 'blogername');
     if(!blog) {
         throw new ExpressError(400, 'Blog not found.');
     }
     res.render('bloger/edit', { blog });
 }));
 
-router.put('/:title', validateBlog, catchAsync( async function(req, res) {
+router.put('/:title', isLoggedIn, isCurrentUser, validateBlog, catchAsync( async function(req, res) {
     const { title, content } = req.body.blog;
-    const bloger = await Bloger.findOne({blogername: req.params.blogername});
-    if(!bloger){
-        throw new ExpressError(400, 'Bloger not found.');
-    }
-    const blog = await Blog.findOneAndUpdate({title: req.params.title, bloger: bloger._id}, {title: title, content: content}).populate('bloger', 'blogername');
+    const blog = await Blog.findOneAndUpdate({title: req.params.title, bloger: req.user._id}, {title: title, content: content}).populate('bloger', 'blogername');
     if(!blog) {
         throw new ExpressError(400, 'Blog not found.');
     }

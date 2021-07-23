@@ -1,4 +1,5 @@
 <% layout('./layouts/boilerplate.ejs') %>
+
 <section class="content-main">
     <div class="dashboard-nav">
         <% console.log(bloger) %>
@@ -27,3 +28,7 @@
     </div>
   
   </section>
+
+<% if(ealert == true) { %>
+  <script src='/javascript/invalidBlogAlert.js'></script>
+<% } %>

@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const passportLoaclMongoose = require('passport-local-mongoose');
 
 const blogerSchema = new Schema({
-    blogername: String,
     fname: String,
     lname: String,
-    password: String,
     blogs: [
         {
             type: Schema.Types.ObjectId,
@@ -13,5 +12,7 @@ const blogerSchema = new Schema({
         }
     ]
 });
+
+blogerSchema.plugin(passportLoaclMongoose, { usernameField: 'blogername' });
 
 module.exports = mongoose.model("Bloger", blogerSchema);

@@ -8,6 +8,7 @@ about
 const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utility/catchAsync');
+const passport = require('passport');
 
 const Bloger = require('../models/bloger');
 
@@ -23,32 +24,38 @@ router.get("/login",async function(req, res){
     res.render('basic/login');
 });
 
-router.post('/login',async function(req, res) {
-    const { blogername, password} = req.body;
-    const bloger = await Bloger.findOne({blogername: blogername});
-    if(bloger) {
-        if(bloger.password==password) {
-            res.redirect(`/bloger/${blogername}`);
-        } else {
-            res.send('Wrong Password');
-        }
-    } else {
-        res.send('No Bloger Found');
-    }
-})
+router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), function(req, res) {
+    res.redirect(`/bloger/${req.body.blogername}`);
+});
 
-router.get("/signup",async function(req, res){
+router.get("/signup", async function(req, res){
     res.render('basic/signup');
 });
 
-router.post("/signup",catchAsync(async function(req, res) {
-    const bloger = new Bloger(req.body);
-    await bloger.save();
-    console.log(bloger);
-    res.redirect(`/bloger/${req.body.blogername}`);
+router.post("/signup", catchAsync(async function(req, res, next) {
+    const { blogername, password, fname, lname, repassword } = req.body;
+    if(password!==repassword) {
+        req.flash('error', 'Re-enter the same password again');
+        return res.redirect('/signup');
+    }
+    const bloger = new Bloger({blogername, fname, lname});
+    const registeredBloger = await Bloger.register(bloger, password);
+    req.login(registeredBloger, function(err) {
+        if(err) {
+            next(err);
+        } else {
+            res.redirect(`/bloger/${req.body.blogername}`);
+        }
+    })
 }));
 
-router.get("/about",async function(req, res){
+router.get('/logout', function(req, res){
+    req.logout();
+    req.flash('success', 'Logged Out');
+    res.redirect('/');
+})
+
+router.get("/about", async function(req, res){
     res.render('basic/about');
 });
 
