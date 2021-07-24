@@ -22,8 +22,8 @@ const Bloger = require('./models/bloger');
 // Like button
 
 
-// const dbUrl = process.env.DB_URL;
-const dbUrl = "mongodb://localhost:27017/blogerDB";
+const dbUrl = process.env.DB_URL;
+// const dbUrl = "mongodb://localhost:27017/blogerDB";
 
 const app = express();
 const store = MongoStore.create({
