@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 
 const globalRoutes = require('./routes/globalRoutes');
 const homeRoutes = require('./routes/homeRoutes');
@@ -13,20 +14,34 @@ const blogerRoutes = require('./routes/blogerRoutes');
 const ExpressError = require('./utility/ExpressError');
 const Bloger = require('./models/bloger');
 
-// I can create a blog with ' ' i.e. space as a title which is not good.
 // To inculde date of when the blog was created.
-// If a known user want to inculde his name on global post.
-// Here I can add that feature If you want to post with your penName included or anonomesly. Ignore spellings.
+// If a known user want to inculde his name on global post. Here I can add that feature If you want to post with your penName included or anonomesly. Ignore spellings.
 // I don't know. A blog that can be edited and deleted by anyone is little bit of for a feature.
 // So I can do is No one can edited and delete a global posted route but can be reported for several reason that can be reviewed later and delete if neccessary. But for now that is good.
 // change blogername and password feature and forget password feature.
 // Like button
 
+
+// const dbUrl = process.env.DB_URL;
+const dbUrl = "mongodb://localhost:27017/blogerDB";
+
 const app = express();
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET
+  },
+  touchAfter: 24*3600
+});
+store.on('error', function(e) {
+  console.log("SESSION STORE ERROR ", e);
+});
 const sessionConfig = {
+  store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
+
   cookie: {
     httpOnly: true,
     expires: Date.now() + 1000*60*60*27*7,

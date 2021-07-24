@@ -6,10 +6,10 @@ const ExpressError = require('../utility/ExpressError');
 
 const Bloger = require('../models/bloger');
 const Blog = require('../models/blog');
+const { bulkWrite } = require('../models/bloger');
 
 router.get('/', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
     const bloger = await Bloger.findOne({blogername: req.params.blogername}).populate('blogs', 'title content');
-    // console.log('askdfj', req.session.noBlog);
     const ealert = req.session.noBlog;
     delete req.session.noBlog;
     return res.render('bloger/dashboard', { bloger, ealert });
@@ -21,8 +21,13 @@ router.get('/compose', isLoggedIn, isCurrentUser, catchAsync( async function(req
 }));
 
 router.post('/compose', isLoggedIn, isCurrentUser, validateBlog, catchAsync( async function(req, res) {
-    const bloger = req.user;
+    const bloger = await Bloger.findById(req.user._id).populate('blogs');
     const blog = new Blog(req.body.blog);
+    const result = bloger.blogs.find( ({ title }) => title === blog.title );
+    if(result) {
+        req.flash('error', 'You have already used the title in another post. Try with a different title');
+        return res.redirect(`/bloger/${bloger.blogername}`);
+    }
     blog.bloger = bloger;
     bloger.blogs.push(blog);
     await blog.save();
@@ -63,12 +68,17 @@ router.get('/:title/edit', isLoggedIn, isCurrentUser, catchAsync( async function
 }));
 
 router.put('/:title', isLoggedIn, isCurrentUser, validateBlog, catchAsync( async function(req, res) {
-    const { title, content } = req.body.blog;
-    const blog = await Blog.findOneAndUpdate({title: req.params.title, bloger: req.user._id}, {title: title, content: content}).populate('bloger', 'blogername');
-    if(!blog) {
-        throw new ExpressError(400, 'Blog not found.');
+    const { content } = req.body.blog;
+    const newBlogTitle = req.body.blog.title;
+    const bloger = await Bloger.findById(req.user._id).populate('blogs');
+    const blog = await Blog.findOne({title: req.params.title, bloger: bloger._id});
+    const result = bloger.blogs.find( ({ title }) => title == newBlogTitle );
+    if(result) {
+        req.flash('error', 'You have already used the title in another post. Try with a different title');
+        return res.redirect(`/bloger/${bloger.blogername}`);
     }
-    res.redirect(`/bloger/${blog.bloger.blogername}`);
+    await blog.update({title: title, content: content});
+    res.redirect(`/bloger/${bloger.blogername}`);
 }));
 
 module.exports = router;
