@@ -1,1 +1,1 @@
-setTimeout(function(){ alert("Note:\n1. Avoid space in start and end of title.\n2. Give title minimum 3 characters."); }, 600);
+setTimeout(function(){ alert("Note:\n1. Avoid space in start and end of title.\n2. Give title minimum 3 characters."); }, 400);

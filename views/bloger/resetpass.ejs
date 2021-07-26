@@ -1,0 +1,23 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<section class="content-main">
+  <h1>Reset Password</h1><br>
+  <form action="/bloger/<%= blogername %>/resetpass" method="POST"  class="needs-validation" novalidate>
+    <div class="form-group">
+      <label>Old Password</label>
+      <input type="password" class="form-control home-input" name="oldpass" required autofocus>
+      <div class="invalid-feedback">Please enter your old password.</div>
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <input type="password" class="form-control home-input" name="newpass" required>
+      <div class="invalid-feedback">Please enter your new password.</div>
+    </div>
+    <div class="form-group">
+        <label>Re-enter new Password</label>
+        <input type="password" class="form-control home-input" name="repass" required>
+        <div class="invalid-feedback">Please re-enter your new password.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Log In</button>
+  </form>
+</section>

@@ -39,14 +39,20 @@ router.post("/signup", catchAsync(async function(req, res, next) {
         return res.redirect('/signup');
     }
     const bloger = new Bloger({blogername, fname, lname});
-    const registeredBloger = await Bloger.register(bloger, password);
-    req.login(registeredBloger, function(err) {
+    Bloger.register(bloger, password, function(err, registeredBloger) {
         if(err) {
-            next(err);
+            req.flash('error', err.message);
+            return res.redirect('/signup');
         } else {
-            res.redirect(`/bloger/${req.body.blogername}`);
+            req.login(registeredBloger, function(err) {
+                if(err) {
+                    next(err);
+                } else {
+                    res.redirect(`/bloger/${req.body.blogername}`);
+                }
+            });
         }
-    })
+    });
 }));
 
 router.get('/logout', function(req, res){
@@ -55,7 +61,7 @@ router.get('/logout', function(req, res){
     res.redirect('/');
 })
 
-router.get("/about", async function(req, res){
+router.get("/about", function(req, res){
     res.render('basic/about');
 });
 

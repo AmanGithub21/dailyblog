@@ -1,9 +1,10 @@
 <% layout('./layouts/boilerplate.ejs') %>
 
-<h1>Global Posts</h1>
 
-<div>
-    <a type="buttons" href="/global/new">Compose</a>
+
+<div class="mb-5 mt-3">
+    <h1 class="col-md-7 d-inline-block">Global Posts</h1>
+    <a type="buttons" class="btn btn-light" href="/global/new">Compose</a>
 </div>
 
 <div class="row">
@@ -22,3 +23,7 @@
         </div>
     <% }); %>
 </div>
+
+<% if(ealert == true) { %>
+    <script src='/javascript/invalidBlogAlert.js'></script>
+<% } %>

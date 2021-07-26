@@ -1,0 +1,16 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<section class="content-main">
+  <h1>Delete My Account</h1><br>
+  <form action="/bloger/<%= blogername %>/deletemyaccount" method="POST"  class="needs-validation" novalidate>
+    <div class="form-group">
+      <label>Enter Your password</label>
+      <input type="password" class="form-control home-input" name="password" required>
+      <div class="invalid-feedback">Please enter your password.</div>
+      <sub>Once you delete your account, all your blogs will be permanently delete form our side</sub><br><br>
+      <input type="checkbox" name="checkbox">
+      <label>I want to delete my account</label>
+    </div>    
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+</section>

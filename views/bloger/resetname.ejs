@@ -1,0 +1,14 @@
+<% layout('./layouts/boilerplate.ejs') %>
+
+<section class="content-main">
+  <h1>Reset PenName</h1><br>
+  <form action="/bloger/<%= blogername %>/resetname" method="POST"  class="needs-validation" novalidate>
+    <div class="form-group">
+      <label>New Pen Name</label>
+      <input type="text" class="form-control home-input" name="newname" required autofocus>
+      <div class="invalid-feedback">Please enter a new name.</div>
+    </div>
+    <sub>Try to choose a unique name.</sub>
+    <button type="submit" class="btn btn-primary">Reset Name</button>
+  </form>
+</section>

@@ -8,7 +8,11 @@ module.exports.validateBlog = function(req, res, next) {
         // throw new ExpressError(400, msg);
         req.session.noBlog = true;
         req.flash('error', 'Blog validation failed');
-        res.redirect(`/bloger/${req.params.blogername}`);
+        if(req.user) {
+        return res.redirect(`/bloger/${req.params.blogername}`);
+        } else {
+            return res.redirect('/global');
+        }
     } else {
         next();
     }
