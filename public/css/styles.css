@@ -20,6 +20,12 @@ body {
   color: red;
 }
 
+/* Navbar */
+
+#nav-title {
+  font-size: 1.7rem;
+}
+
 /* home */
 
 .buttons-div {
@@ -48,11 +54,7 @@ body {
 }
 
 .text-truncate {
-  /* background-color:yellow;
-  font-size:1.5rem; */
   width: 70%;
-
-  /**Major Properties**/
   text-overflow:ellipsis;
   display: inline-block;
   margin-bottom: 0;

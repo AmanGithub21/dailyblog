@@ -1,10 +1,3 @@
-/*
-login
-signup
-about
-/home
-
-*/
 const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utility/catchAsync');
@@ -12,7 +5,7 @@ const passport = require('passport');
 
 const Bloger = require('../models/bloger');
 
-router.get("/",async function(req, res){
+router.get("/", function(req, res){
     res.render('basic/home');
 });
 
@@ -20,7 +13,11 @@ router.get('/about', function(req, res) {
     res.render('basic/about');
 });
 
-router.get("/login",async function(req, res){
+router.get("/login", function(req, res){
+    if(req.user) {
+        req.flash('error', 'Someone is already loggedIn.');
+        return res.redirect('/');
+    }
     res.render('basic/login');
 });
 
@@ -28,11 +25,19 @@ router.post('/login', passport.authenticate('local', {failureFlash: true, failur
     res.redirect(`/bloger/${req.body.blogername}`);
 });
 
-router.get("/signup", async function(req, res){
+router.get("/signup", function(req, res){
+    if(req.user) {
+        req.flash('error', 'Someone is already loggedIn.');
+        return res.redirect('/');
+    }
     res.render('basic/signup');
 });
 
 router.post("/signup", catchAsync(async function(req, res, next) {
+    if(req.user) {
+        req.flash('error', 'Someone is already loggedIn.');
+        return res.redirect('/');
+    }
     const { blogername, password, fname, lname, repassword } = req.body;
     if(password!==repassword) {
         req.flash('error', 'Re-enter the same password again');
@@ -56,13 +61,14 @@ router.post("/signup", catchAsync(async function(req, res, next) {
 }));
 
 router.get('/logout', function(req, res){
-    req.logout();
-    req.flash('success', 'Logged Out');
-    res.redirect('/');
+    if(req.user) {
+        req.logout();
+        req.flash('success', 'Logged Out');
+        res.redirect('/');
+    } else {
+        req.flash('error', 'You are not even loggedIn.');
+        return res.redirect('/');
+    }
 })
-
-router.get("/about", function(req, res){
-    res.render('basic/about');
-});
 
 module.exports = router;

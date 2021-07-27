@@ -6,7 +6,6 @@ const ExpressError = require('../utility/ExpressError');
 
 const Bloger = require('../models/bloger');
 const Blog = require('../models/blog');
-const { bulkWrite } = require('../models/bloger');
 
 router.get('/', isLoggedIn, isCurrentUser, catchAsync( async function(req, res) {
     const bloger = await Bloger.findOne({blogername: req.params.blogername}).populate('blogs', 'title content');

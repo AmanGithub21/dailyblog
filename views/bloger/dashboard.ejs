@@ -1,11 +1,11 @@
 <% layout('./layouts/boilerplate.ejs') %>
 
 <section class="content-main">
-    <div class="dashboard-nav">
-      <h1 class="d-inline-block col-md-11">Welcome <%= bloger.fname %></h1>
+    <div class="dashboard-nav d-flex justify-content">
+      <h1 class="d-inline-block col-md-11 pl-0">Welcome <%= bloger.fname %></h1>
       <div class="d-inline col-md-1">
-        <div class="d-inline dropdown">
-          <div class="d-inline" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v fa-2x"></i></div>
+        <div class="dropdown">
+          <div class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v fa-2x"></i></div>
           <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="/bloger/<%=bloger.blogername%>/compose">Compose</a>
             <a class="dropdown-item" href="/bloger/<%=bloger.blogername%>/resetpass">Change Password</a>
@@ -26,7 +26,7 @@
           <div class="card custom-card">
             <div class="card-body">
               <h5 class="card-title display-inlineblock"><%=blog.title%> </h5>
-              <sup><i class="far fa-star fa-1x fav-icon"></i></sup>
+              <%# <sup><i class="far fa-star fa-1x fav-icon"></i></sup> %>
               <br>
               <p class="card-text text-truncate">
                 <%=blog.content%>

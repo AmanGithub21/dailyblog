@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// const dbUrl = process.env.DB_URL;
-const dbUrl = "mongodb://localhost:27017/blogerDB";
+const dbUrl = process.env.DB_URL;
+// const dbUrl = "mongodb://localhost:27017/blogerDB";
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
     useNewUrlParser: true,

@@ -2,13 +2,18 @@
 
 <section class="container-fluid content-main">
     <div class="">
-        <h1 class="col-lg-8 d-inline-block">Home</h1>
+        <h1 class="col-lg-8 d-inline-block pl-0 mb-3">Home</h1>
         <div class="ml-auto d-inline">
             <a href="/global" type="button" class="btn btn-light">Visit Community</a>
             <% if(currentUser) { %>
             <a href="/bloger/<%= currentUser.blogername %>/" type="button" class="col-log-5 btn btn-light">My dashboard</a>
             <% } %>
         </div>
+    </div>
+    <div class="mt-5 h5 lead">
+        Welcome Bloger. <br>
+        Visit Our Community to start bloging without authenticating. <br>
+        For your personal space, LoggIn or SignUp.
     </div>
 </section>
 

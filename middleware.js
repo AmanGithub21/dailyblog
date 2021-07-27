@@ -19,7 +19,6 @@ module.exports.validateBlog = function(req, res, next) {
 }
 
 module.exports.isLoggedIn = function(req, res, next) {
-    // console.log('REQ.USER' , req.user);
     if(!req.isAuthenticated()) {
         req.flash('error', 'You must be signed in');
         return res.redirect('/login');
@@ -29,7 +28,8 @@ module.exports.isLoggedIn = function(req, res, next) {
 
 module.exports.isCurrentUser = function(req, res, next) {
     if(req.user.blogername !== req.params.blogername) {
-        throw new ExpressError(400, 'You are not authorised to visit others page');
+        req.flash('error', 'You are not authorised to visit others page');
+        return res.redirect(`/bloger/${req.user.blogername}`);
     }
     next();
 }

@@ -18,12 +18,10 @@ const Bloger = require('./models/bloger');
 // If a known user want to inculde his name on global post. Here I can add that feature If you want to post with your penName included or anonomesly. Ignore spellings.
 // I don't know. A blog that can be edited and deleted by anyone is little bit of for a feature.
 // So I can do is No one can edited and delete a global posted route but can be reported for several reason that can be reviewed later and delete if neccessary. But for now that is good.
-// change blogername and password feature and forget password feature.
 // Like button
 
-
-// const dbUrl = process.env.DB_URL;
-const dbUrl = "mongodb://localhost:27017/blogerDB";
+const dbUrl = process.env.DB_URL;
+// const dbUrl = "mongodb://localhost:27017/blogerDB";
 
 const app = express();
 const store = MongoStore.create({
@@ -41,7 +39,6 @@ const sessionConfig = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
-
   cookie: {
     httpOnly: true,
     expires: Date.now() + 1000*60*60*27*7,

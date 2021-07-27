@@ -1,20 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">DAILY BLOG</a>
+  <a class="navbar-brand mr-5 h2" id="nav-title" href="/">DAILY BLOG</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="navbar-nav pr-5">
-      <a class="ml-3 nav-item nav-link" href="/">Home</a>
-      <a class="nav-item nav-link" href="/about">About</a>
+      <a class="nav-item nav-link h6" href="/">Home</a>
+      <a class="nav-item nav-link h6" href="/about">About</a>
     </div>
     <div class="navbar-nav ml-auto pr-5">
       <% if(!currentUser) { %>
-        <a class="nav-item nav-link" href="/login">Login</a>
-        <a class="nav-item nav-link" href="/signup">Signup</a>
+        <a class="nav-item nav-link h6" href="/login">Login</a>
+        <a class="nav-item nav-link h6" href="/signup">Signup</a>
       <% } else {%>
-        <a class="nav-item nav-link" href="/logout">Logout</a>
+        <a class="nav-item nav-link h6" href="/logout">Logout</a>
       <% } %>
     </div>
   </div>
